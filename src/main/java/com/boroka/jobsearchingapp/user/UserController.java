@@ -15,23 +15,23 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/user")
+    @GetMapping("/users")
     public String users(Model model) {
         return users();
     }
 
     private String users() {
-        return "/user";
+        return "/users";
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     public String edit(@PathVariable Integer id, Model model) {
         UserEntity formUser = userService.getById(id);
         model.addAttribute("formUser", formUser);
         return users();
     }
 
-    @PostMapping("/user")
+    @PostMapping("/users")
     public String createUser(
             @ModelAttribute("formUser") @Valid UserEntity formUser,
             BindingResult bindingResult,
@@ -45,7 +45,7 @@ public class UserController {
         return users();
     }
 
-    @PostMapping("/user/{id}")
+    @PostMapping("/users/{id}")
     public String save(
             @PathVariable Integer id,
             @ModelAttribute("formUser") @Valid UserEntity formUser,
