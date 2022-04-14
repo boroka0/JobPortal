@@ -15,23 +15,46 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/users")
-    public String users() {
-        return "/users";
+    @GetMapping("/user")
+    public String users(Model model) {
+        return users();
     }
 
-    @GetMapping("/mainpage")
-    public String mainPageToUser(Model model) {
-        return "/users";
+    private String users() {
+        return "/user";
     }
 
-    @PostMapping("/users")
+    @GetMapping("/user/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        UserEntity formUser = userService.getById(id);
+        model.addAttribute("formUser", formUser);
+        return users();
+    }
+
+    @PostMapping("/user")
     public String createUser(
             @ModelAttribute("formUser") @Valid UserEntity formUser,
-            BindingResult bindingResult
+            BindingResult bindingResult,
+            Model model
     ) {
         if (!bindingResult.hasErrors()) {
             userService.createUser(formUser);
+            refreshAllUsers(model);
+            clearFormUser(model);
+        }
+        return users();
+    }
+
+    @PostMapping("/user/{id}")
+    public String save(
+            @PathVariable Integer id,
+            @ModelAttribute("formUser") @Valid UserEntity formUser,
+            BindingResult bindingResult,
+            Model model) {
+        if (!bindingResult.hasErrors()) {
+            userService.save(formUser);
+            refreshAllUsers(model);
+            clearFormUser(model);
         }
         return users();
     }
@@ -49,5 +72,13 @@ public class UserController {
     @ModelAttribute("formNewUser")
     public Boolean formNewUser() {
         return true;
+    }
+
+    private void refreshAllUsers(Model model) {
+        model.addAttribute("allUser", allUser());
+    }
+
+    private void clearFormUser(Model model) {
+        model.addAttribute("formUser", formUser());
     }
 }
