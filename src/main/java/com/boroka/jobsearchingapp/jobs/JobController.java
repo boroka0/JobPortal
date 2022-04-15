@@ -54,9 +54,8 @@ public class JobController {
         return jobs();
     }
 
-    @GetMapping("/jobs/")
+    @GetMapping("/jobs/search")
     public String findJob(
-            JobEntity job,
             Model model,
             String keyword
     ) {

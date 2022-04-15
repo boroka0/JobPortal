@@ -31,10 +31,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="job : ${allJob}">
-        <th scope="row" th:text="${job.id}">1</th>
-        <td th:text="${job.jobName}">Job Name</td>
-        <td th:text="${job.location}">Location</td>
+    <tr th:each="jobs : ${allJob}">
+        <th scope="row" th:text="${jobs.id}">1</th>
+        <td th:text="${jobs.jobName}">Job Name</td>
+        <td th:text="${jobs.location}">Location</td>
     </tr>
     </tbody>
 </table>
